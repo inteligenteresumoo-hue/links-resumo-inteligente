@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resumo Inteligente | Links</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            position: relative;
+            overflow-x: hidden;
+        }
+        
+        /* Animações de fundo */
+        body::before {
+            content: '';
+            position: fixed;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 1px, transparent 1px);
+            background-size: 50px 50px;
+            animation: moveBackground 20s linear infinite;
+            pointer-events: none;
+        }
+        
+        @keyframes moveBackground {
+            0% { transform: translate(0, 0); }
+            100% { transform: translate(50px, 50px); }
+        }
+        
+        .container {
+            max-width: 500px;
+            width: 100%;
+            position: relative;
+            z-index: 1;
+            animation: fadeIn 0.8s ease-out;
+        }
+        
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        /* Perfil */
+        .profile {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        .avatar {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            background: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            border: 3px solid white;
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { box-shadow: 0 10px 30px rgba(0,0,0,0.3); }
+            50% { box-shadow: 0 10px 50px rgba(255,255,255,0.6); }
+        }
+        
+        .avatar-icon {
+            font-size: 3em;
+        }
+        
+        .profile h1 {
+            color: white;
+            font-size: 1.8em;
+            margin-bottom: 5px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        
+        .profile p {
+            color: rgba(255,255,255,0.9);
+            font-size: 1em;
+            margin-bottom: 10px;
+        }
+        
+        .badge {
+            display: inline-block;
+            background: rgba(255,255,255,0.2);
+            color: white;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.85em;
+            backdrop-filter: blur(10px);
+        }
+        
+        /* Links */
+        .links-container {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+        
+        .link-card {
+            background: white;
+            border-radius: 20px;
+            padding: 20px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            text-decoration: none;
+            color: #333;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
+        }
+        
+        .link-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            transition: left 0.5s;
+        }
+        
+        .link-card:hover::before {
+            left: 100%;
+        }
+        
+        .link-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+        
+        .link-card:active {
+            transform: scale(0.98);
+        }
+        
+        .link-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5em;
+            flex-shrink: 0;
+        }
+        
+        .link-icon.portfolio {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+        }
+        
+        .link-icon.instagram {
+            background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888);
+            color: white;
+        }
+        
+        .link-icon.flashcards {
+            background: linear-gradient(135deg, #28a745, #20c997);
+            color: white;
+        }
+        
+        .link-info {
+            flex: 1;
+        }
+        
+        .link-title {
+            font-weight: bold;
+            font-size: 1.1em;
+            margin-bottom: 3px;
+        }
+        
+        .link-description {
+            color: #666;
+            font-size: 0.85em;
+        }
+        
+        .link-arrow {
+            color: #999;
+            font-size: 1.2em;
+            transition: transform 0.3s;
+        }
+        
+        .link-card:hover .link-arrow {
+            transform: translateX(5px);
+        }
+        
+        /* Botão Instagram */
+        .instagram-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
+            color: white;
+            padding: 15px 25px;
+            border-radius: 25px;
+            text-decoration: none;
+            font-weight: bold;
+            margin: 20px 0;
+            box-shadow: 0 5px 20px rgba(220, 39, 67, 0.4);
+            transition: all 0.3s;
+        }
+        
+        .instagram-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 30px rgba(220, 39, 67, 0.6);
+        }
+        
+        .instagram-btn svg {
+            width: 20px;
+            height: 20px;
+            fill: white;
+        }
+        
+        /* Rodapé */
+        .footer {
+            text-align: center;
+            color: white;
+            font-size: 0.9em;
+            opacity: 0.8;
+        }
+        
+        .footer a {
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        
+        /* Responsividade */
+        @media (max-width: 400px) {
+            .profile h1 {
+                font-size: 1.5em;
+            }
+            
+            .avatar {
+                width: 80px;
+                height: 80px;
+            }
+            
+            .avatar-icon {
+                font-size: 2.5em;
+            }
+            
+            .link-card {
+                padding: 15px;
+            }
+            
+            .link-icon {
+                width: 40px;
+                height: 40px;
+                font-size: 1.2em;
+            }
+            
+            .link-title {
+                font-size: 1em;
+            }
+            
+            .link-description {
+                font-size: 0.8em;
+            }
+        }
+        
+        @media (max-width: 320px) {
+            .link-card {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .link-arrow {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Perfil -->
+        <div class="profile">
+            <div class="avatar">
+                <span class="avatar-icon">📚</span>
+            </div>
+            <h1>Resumo Inteligente</h1>
+            <p>Estudante de Medicina</p>
+            <span class="badge">✨ Conteúdo educacional</span>
+        </div>
+        
+        <!-- Links Principais -->
+        <div class="links-container">
+            <!-- Link 1: Portfólio -->
+            <a href="https://drive.google.com/drive/folders/1ioY5ivgtmwYqwlpRkrSXAcBVq1qm3CwM" 
+               target="_blank" 
+               class="link-card">
+                <div class="link-icon portfolio">📁</div>
+                <div class="link-info">
+                    <div class="link-title">Meu Portfólio</div>
+                    <div class="link-description">Trabalhos e projetos acadêmicos</div>
+                </div>
+                <span class="link-arrow">→</span>
+            </a>
+            
+            <!-- Link 2: Instagram -->
+            <a href="https://www.instagram.com/inteligente_resumo/" 
+               target="_blank" 
+               class="link-card">
+                <div class="link-icon instagram">
+                    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" style="width: 24px; height: 24px; fill: white;">
+                        <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+                    </svg>
+                </div>
+                <div class="link-info">
+                    <div class="link-title">Instagram</div>
+                    <div class="link-description">Interessado? Chame no direct!</div>
+                </div>
+                <span class="link-arrow">→</span>
+            </a>
+            
+            <!-- Link 3: Flashcards -->
+            <a href="https://flashcards-medicina.netlify.app" 
+               target="_blank" 
+               class="link-card">
+                <div class="link-icon flashcards">🩺</div>
+                <div class="link-info">
+                    <div class="link-title">Flashcards de Medicina</div>
+                    <div class="link-description">Ferramenta de estudos (fase inicial)</div>
+                </div>
+                <span class="link-arrow">→</span>
+            </a>
+        </div>
+        
+        <!-- Botão Instagram Destacado -->
+        <a href="https://www.instagram.com/inteligente_resumo/" 
+           target="_blank" 
+           class="instagram-btn">
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+            </svg>
+            Seguir no Instagram
+        </a>
+        
+        <!-- Rodapé -->
+        <div class="footer">
+            <p>© 2024 Resumo Inteligente</p>
+            <p style="margin-top: 5px;">✨ Criado com dedicação para estudantes</p>
+        </div>
+    </div>
+</body>
+</html>
