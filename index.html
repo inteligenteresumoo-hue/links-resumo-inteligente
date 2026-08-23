@@ -13,7 +13,7 @@
         
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+            background: linear-gradient(135deg, #1a2a6c 0%, #0c2461 50%, #2c3e8f 100%);
             min-height: 100vh;
             display: flex;
             align-items: center;
@@ -79,15 +79,18 @@
             box-shadow: 0 10px 30px rgba(0,0,0,0.3);
             border: 3px solid white;
             animation: pulse 2s infinite;
+            overflow: hidden;
+        }
+        
+        .avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
         }
         
         @keyframes pulse {
             0%, 100% { box-shadow: 0 10px 30px rgba(0,0,0,0.3); }
             50% { box-shadow: 0 10px 50px rgba(255,255,255,0.6); }
-        }
-        
-        .avatar-icon {
-            font-size: 3em;
         }
         
         .profile h1 {
@@ -173,7 +176,7 @@
         }
         
         .link-icon.portfolio {
-            background: linear-gradient(135deg, #667eea, #764ba2);
+            background: linear-gradient(135deg, #1a2a6c, #2c3e8f);
             color: white;
         }
         
@@ -265,10 +268,6 @@
                 height: 80px;
             }
             
-            .avatar-icon {
-                font-size: 2.5em;
-            }
-            
             .link-card {
                 padding: 15px;
             }
@@ -305,7 +304,7 @@
         <!-- Perfil -->
         <div class="profile">
             <div class="avatar">
-                <span class="avatar-icon">📚</span>
+                <img src="imagens/logo.png" alt="Logo Resumo Inteligente">
             </div>
             <h1>Resumo Inteligente</h1>
             <p>Estudante de Medicina</p>
